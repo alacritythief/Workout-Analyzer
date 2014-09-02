@@ -1,10 +1,16 @@
 # Define a Workout class that encapsulates the necessary data and the methods that calculate this information.
 
 class Workout
-  attr_reader :workouts, :exercises, :id, :calories_calc, :burned
+  attr_reader :all
 
   def initialize(file = 'workouts.csv')
     @workouts = load_workout_data(file)
+    @all = []
+
+    (1..max_workouts).each do |i|
+      pick(i)
+      @all << {:id => i, :date => date, :type => type, :duration => duration, :calories_burned => total_burned}
+    end
   end
 
   def pick(choice = 1)
@@ -13,7 +19,7 @@ class Workout
     return @pick
   end
 
-  def count_workouts
+  def max_workouts
     return @workouts.count
   end
 
@@ -34,7 +40,6 @@ class Workout
     else
       type = "other"
     end
-
     return type
   end
 
@@ -45,6 +50,7 @@ class Workout
 
   def sum(array)
     sum = 0
+
     array.each do |time|
       sum = sum + time.to_f
     end
@@ -53,6 +59,7 @@ class Workout
 
   def duration
     @duration = []
+
     @pick[:exercises].each do |exercise|
       @duration << exercise[:duration_in_min]
     end
@@ -83,8 +90,7 @@ class Workout
   end
 
 
-  def calories_burned
-
+  def total_burned
     @exercises = []
     @total_burned = []
 
@@ -94,7 +100,6 @@ class Workout
 
     @burned = calories_calc(@exercises)
     @total_burned = sum(@burned)
-
     return @total_burned
   end
 

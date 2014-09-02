@@ -1,5 +1,6 @@
 require_relative 'workout'
 require 'csv'
+require 'table_print'
 
 # create a hash of workout info from CSV
 def load_workout_data(filename)
@@ -30,7 +31,7 @@ end
 
 # YOUR CODE HERE
 
-list = Workout.new
-
-require 'pry'
-binding.pry
+workout_list = Workout.new
+puts "Workout Stats:"
+puts
+tp workout_list.all
